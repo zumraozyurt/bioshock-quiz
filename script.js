@@ -1,49 +1,49 @@
-document.getElementById('quiz-form').addEventListener('submit', function(event) {
-  event.preventDefault();
+document.getElementById('quiz-form').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-  // Initialize character scores
-  const scores = {
-    AndrewRyan: 0,
-    BrigidTenenbaum: 0,
-    FrankFontaine: 0,
-    Atlas: 0,
-    SanderCohen: 0,
-    Jack: 0,
-    YiSuchong: 0,
-    JulieLangford: 0
-  };
+    // Initialize character scores
+    const scores = {
+        AndrewRyan: 0,
+        BrigidTenenbaum: 0,
+        FrankFontaine: 0,
+        Atlas: 0,
+        SanderCohen: 0,
+        Jack: 0,
+        YiSuchong: 0,
+        JulieLangford: 0
+    };
 
-  // Check if all questions are answered
-  let allAnswered = true;
-  
-  // Count votes for each character
-  document.querySelectorAll('.question').forEach((question, index) => {
-    const selected = question.querySelector('input[type="radio"]:checked');
-    if (!selected) {
-      allAnswered = false;
-      question.style.border = "2px solid #800020"; // Highlight unanswered questions
-      return; // Skip this iteration
+    // Check if all questions are answered
+    let allAnswered = true;
+
+    // Count votes for each character
+    document.querySelectorAll('.question').forEach((question, index) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        if (!selected) {
+            allAnswered = false;
+            question.style.border = "2px solid #800020"; // Highlight unanswered questions
+            return; // Skip this iteration
+        }
+        question.style.border = ""; // Reset border if answered
+        scores[selected.value]++;
+    });
+
+    if (!allAnswered) {
+        alert('Please answer all of the questions');
+        return;
     }
-    question.style.border = ""; // Reset border if answered
-    scores[selected.value]++;
-  });
 
-  if (!allAnswered) {
-    alert('Please answer all of the questions');
-    return;
-  }
+    // Find character with highest score
+    let maxScore = 0;
+    let resultCharacter = 'Jack'; // default fallback
 
-  // Find character with highest score
-  let maxScore = 0;
-  let resultCharacter = 'Jack'; // default fallback
-  
-  for (const character in scores) {
-    if (scores[character] > maxScore) {
-      maxScore = scores[character];
-      resultCharacter = character;
+    for (const character in scores) {
+        if (scores[character] > maxScore) {
+            maxScore = scores[character];
+            resultCharacter = character;
+        }
     }
-  }
 
-  // Redirection
-  window.location.href = `${resultCharacter.toLowerCase()}.html`;
+    // Redirection
+    window.location.href = `${resultCharacter.toLowerCase()}.html`;
 });
