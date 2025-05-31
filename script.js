@@ -21,13 +21,17 @@ document.getElementById('quiz-form').addEventListener('submit', function(event) 
     const selected = question.querySelector('input[type="radio"]:checked');
     if (!selected) {
       allAnswered = false;
-      alert(`Please answer question ${index + 1}`);
-      return;
+      question.style.border = "2px solid #800020"; // Highlight unanswered questions
+      return; // Skip this iteration
     }
+    question.style.border = ""; // Reset border if answered
     scores[selected.value]++;
   });
 
-  if (!allAnswered) return;
+  if (!allAnswered) {
+    alert('Please answer all of the questions');
+    return;
+  }
 
   // Find character with highest score
   let maxScore = 0;
@@ -40,6 +44,6 @@ document.getElementById('quiz-form').addEventListener('submit', function(event) 
     }
   }
 
-  // Redirect to the corresponding result page
+  // Redirection
   window.location.href = `${resultCharacter.toLowerCase()}.html`;
 });
